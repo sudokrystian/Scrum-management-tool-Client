@@ -1,0 +1,28 @@
+﻿@model List<WebCoreMVC.NET.Models.Task>
+
+@{
+    ViewData["Title"] = "Tasks";
+}
+<head>
+    <title>Sprints</title>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+</head>
+<body>
+<h1>Tasks</h1>
+            <button class="btn btn-primary" onclick="goToPreviousWebsite()">Go Back</button>
+<div class="row">
+    <div class="structure">
+        <br />
+        <br />
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li class="flex-row">
+                    <p class="text-primary">@item.description</p>
+                    <p class="text-info padding-left-30px">@item.status</p>
+                </li>
+          }
+        </ul>
+    </div>
+</div>
+</body>

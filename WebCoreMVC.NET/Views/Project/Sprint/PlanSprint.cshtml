@@ -1,0 +1,32 @@
+﻿@model WebCoreMVC.NET.Models.Sprint
+
+@{
+    ViewData["Title"] = "PlanSprint";
+}
+<head>
+    <title>Create Sprint</title>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+
+</head>
+
+<button class="w3-button w3-black w3-card-4" onclick="goToPreviousWebsite()">< Back</button>
+<br />
+<br />
+<div class="text-center container">
+    <h1>Create Sprint</h1>
+    <hr />
+    <form asp-controller="Sprint" asp-action="PostSprint">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label class="control-label">Product Owner ID</label>
+            <input asp-for="productOwnerUsername" class="form-control" placeholder="Product Owner ID" required="required" />
+            <span asp-validation-for="productOwnerUsername" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Scrum Master ID</label>
+            <input asp-for="scrumMasterUsername" name="srumMasterUsername" class="form-control" placeholder="Scrum Master ID" required="required" />
+            <span asp-validation-for="scrumMasterUsername" class="text-danger"></span>
+        </div>
+    </form>
+</div>
+<script src="js/navbar.js"></script>

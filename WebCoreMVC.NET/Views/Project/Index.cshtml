@@ -1,0 +1,103 @@
+﻿@model IEnumerable<Project>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+<head>
+    <title>Projects</title>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+
+</head>
+<body>
+    <h1>Projects</h1>
+    <div class="row">
+        <div class="structure">
+            <div class="create_project">
+                <h3 id="projectHeader">Create New Project</h3>
+                <button id="create" class="w3-button w3-xlarge w3-black w3-card-4" onclick="location.href='@Url.Action("CreateProject")'">+</button>
+            </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+            @foreach (var item in Model)
+            {
+                <div class="project">
+                    <h1>@Html.DisplayFor(modelItem => item.name)</h1>
+                    @if (item.isAdministrator == true)
+                    {
+                        <div class="admin">Admin</div>
+                    }
+                    <div class="buttonContainer">
+                        <button class="example_c" onclick="location.href='@Url.Action("Index", "Sprint", new ProjectIDandAdministrator(item.projectId, item.isAdministrator))'">Sprints</button>
+                        <button class="example_c" onclick="location.href='@Url.Action("Index", "Backlog", new {item.projectId})'">Product Backlog</button>
+                        <div class="break"> </div>
+                        <button class="example_c">Edit Project</button>
+                        @if (item.isAdministrator == true)
+                        {
+                            <button class="example_c" onclick="location.href = '@Url.Action("Index", "Members", new { item.projectId })'">Edit Members</button>
+                        }
+                        <div class="break"> </div>
+                        <button class="example_c" onclick="location.href='@Url.Action("LeaveProject", "Project", new {item.projectId})'">Leave Project</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 500px !important" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="exampleModalLabel">Members</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+                        </div>
+                        <h6>Project Name</h6>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Number of sprints in the project</label>
+                        </div>
+                        <select class="custom-select" id="selectNumberOfSprintsInTheProject">
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                            <option value="4">Four</option>
+                            <option value="5">Five</option>
+                            <option value="6">Six</option>
+                            <option value="7">One</option>
+                            <option value="8">Two</option>
+                            <option value="9">Three</option>
+                            <option value="10">One</option>
+                            <option value="11">Two</option>
+                            <option value="12">Three</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Default</span>
+                        </div>
+                        <h6>Length of sprint in days</h6>
+                        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+</body>

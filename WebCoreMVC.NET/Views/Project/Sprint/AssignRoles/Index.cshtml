@@ -1,0 +1,59 @@
+@model ContainerForListAndId<UserWithName>
+@{
+    ViewData["Title"] = "Roles in Sprint";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <title>Edit Members</title>
+</head>
+<body>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<h1>Members</h1>
+<h6 id="membersError" class="text-danger"></h6>
+    <div class="margin-left-80px" id="divMembers">
+        <br />
+        <br />
+        <hr />
+        <div class="row">
+            <div id="membersInTheProjectList" class="structure">
+                @foreach(var item in Model.accessList) {
+                    <div class="member">
+                        @if (item.scrumMaster) {
+                            <div class="member_scrum_master">Scrum Master</div>
+                        }
+                        @if (item.productOwner) {
+                            <div class="member_product_owner">Product Owner</div>
+                        }
+                        <div class="member_team_member">Team Member</div>
+                        <img src="https://yt3.ggpht.com/-v6ueJEAFe5E/AAAAAAAAAAI/AAAAAAAAAAA/QexJ3Y8Xxtc/s-c-k-no-rj-c0xffffffphoto.jpg" alt="red"/>
+                        <div class="member_info">
+                            <div class="column">
+                                <p class="member_name"> @item.firstName @item.lastName</p>
+                                <p class="username">@item.username is product owner? @item.productOwner, is scrum master? @item.scrumMaster</p>
+                            </div>
+                        </div>
+                        <div class="member_buttons">
+                            <div class="column">
+                                @if (item.productOwner == false && item.scrumMaster == false ) {
+                                    <button class="makeProductOwnerButton" onclick="location.href='@Url.Action("AssignProductOwner", "Sprint", new AssignRole(@item.username, @Model.id))'">Make Product Owner</button>
+                                    <button class="makeScrumMasterButton" onclick="location.href='@Url.Action("AssignScrumMaster", "Sprint", new AssignRole(@item.username, @Model.id))'">Make Scrum Master</button>
+                                }
+                                @if (item.productOwner && item.scrumMaster == false) {
+                                    <button class="deleteRoleButton" >Delete Role</button>
+                                }
+                                @if (item.scrumMaster && item.productOwner == false) {
+                                    <button class="deleteRoleButton">Delete Role</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

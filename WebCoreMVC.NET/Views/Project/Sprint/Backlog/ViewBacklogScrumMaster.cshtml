@@ -1,0 +1,83 @@
+﻿@model ContainerForListAndId<SprintUserStory>
+
+@{
+    ViewData["Title"] = "Sprint Backlog";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Product Backlog</title>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+</head>
+<body>
+    <button class="btn btn-primary" onclick="goToPreviousWebsite()">< Back</button>
+    <br />
+    <br />
+    <h1>User Stories</h1>
+    <h6 id="sprintBacklogError" class="text-danger"></h6>
+    <div class="row">
+        <div class="structure">
+            <ul id="listOfSprinttUserStories">
+                @foreach (var item in Model.accessList)
+                {
+                    <li class="flex-row">
+                        <p>@item.description</p>
+                        <p class="text-info padding-left-30px">Priority: @item.priority, Difficulty: @item.difficulty</p>
+                        <button class="btn btn-warning margin-left-80px" onclick="openTasksModal(@item.sprintUserStoryId)">Tasks</button>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal for assigning user story to the sprint -->
+    <div class="modal fade" id="assignUserStoryToSprintModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="listOfProjectUserStoriesInsideSprint"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal for displaying tasks assigned to the user story -->
+    <div class="modal fade" id="userStoryTasks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Task:</span>
+                        </div>
+                        <h6>Description</h6>
+                        <input id="newTaskForTheUserStory" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addTaskToTheUserStory()">Add task</button>
+                    <hr />
+                    <div id="listOfTasksForTheUserStory"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

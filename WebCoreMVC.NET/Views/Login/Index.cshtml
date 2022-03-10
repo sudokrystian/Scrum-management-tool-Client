@@ -1,0 +1,35 @@
+﻿@model WebCoreMVC.NET.Models.LogginUser
+@{
+    ViewData["Title"] = "Login";
+}
+
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link href="css/forms.css" media="screen and (max-width: 2800px)" type="text/css" rel="stylesheet" />
+</head>
+<div class="text-center container">
+    <div class="center_login">
+        <div class="login">
+            <h1>VIA Scrum</h1>
+            <form asp-action="Authorization">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="username" class="form-control" placeholder="Username" required="required"/>
+                    <span asp-validation-for="username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="password" class="form-control" placeholder="Password" required="required"/>
+                    <span asp-validation-for="password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn btn-primary btn-block btn-large"/>
+                </div>
+            </form>
+            <br/>
+            <p align="center" class="registerLabel">Create a new account <a asp-controller="Login" asp-action="Register">here</a>.</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>

@@ -1,0 +1,92 @@
+@model ContainerForListAndId<UserStory>
+
+@{
+    ViewData["Title"] = "Product Backlog";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Product Backlog</title>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+</head>
+<body>
+    <button class="btn btn-primary" onclick="goToPreviousWebsite()">< Back</button>
+    <br />
+    <br />
+    <h1>User Stories</h1>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#addUserStoryToProjectModal">Add a user story</button>
+    <h6 id="projectBacklogError" class="text-danger"></h6>
+    <div class="row">
+        <div class="structure">
+            <ul id="listOfProjectUserStories">
+                @foreach (var item in Model.accessList)
+                {
+                    <li class="flex-row">
+                        <p>@item.description</p>
+                        <p class="text-info padding-left-30px">Priority: @item.priority, Difficulty: @item.difficulty</p>
+                        <button class="btn btn-danger margin-left-80px" onclick="location.href='@Url.Action("DeleteUserStory", "Backlog", @item)'">Delete user story</button>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addUserStoryToProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">User story:</span>
+                        </div>
+                        <h6>Description</h6>
+                        <input id="projectUserStoryDescription" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="selectPriorityOfTheUserStory">Priority</label>
+                        </div>
+                        <select class="custom-select" id="selectPriorityOfTheUserStory">
+                            <option value="LOW">Low</option>
+                            <option value="MEDIUM">Medium</option>
+                            <option value="HIGH">High</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="selectDifficultyOfTheUserStory">Difficulty</label>
+                        </div>
+                        <select class="custom-select" id="selectDifficultyOfTheUserStory">
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                            <option value="4">Four</option>
+                            <option value="5">Five</option>
+                            <option value="6">Six</option>
+                            <option value="7">Seven</option>
+                            <option value="8">Eight</option>
+                            <option value="9">Nine</option>
+                            <option value="10">Ten</option>
+                            <option value="11">Eleven</option>
+                            <option value="12">Twelve</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addUserStoryToProjectBacklog(@Model.id)">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

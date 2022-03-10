@@ -1,0 +1,73 @@
+@model ContainerForListAndId<UserWithName>
+@{
+    ViewData["Title"] = "Members";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+        <title>Edit Members</title>
+</head>
+<body>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h1>Members</h1>
+    <h6 id="membersError" class="text-danger"></h6>
+    <div class="margin-left-80px" id="divMembers">
+        <br />
+        <br />
+        <button id="addMemberJS" class="btn btn-primary" data-toggle="modal" data-target="#addMemberModal" onclick="getUsersOutsideProject(@Model.id)">Add userII</button>
+        <hr />
+        <div class="row">
+            <div id="membersInTheProjectList" class="structure">
+                @foreach(var item in Model.accessList) {
+                    <div class="member">
+                        <img src="https://yt3.ggpht.com/-v6ueJEAFe5E/AAAAAAAAAAI/AAAAAAAAAAA/QexJ3Y8Xxtc/s-c-k-no-rj-c0xffffffphoto.jpg" alt="red"/>
+                        <div class="member_info">
+                            <div class="column">
+                                <p class="member_name"> @item.firstName @item.lastName</p>
+                                <p class="username">@item.username</p>
+                            </div>
+                        </div>
+                        <div class="member_buttons">
+                            <div class="column">
+                                @if (!(@item.username.Equals(User.Identity.Name)))
+                                {
+                                    <button class="deleteMemberButton w3-button w3-black w3-card-4" onclick="location.href='@Url.Action("DeleteMember", "Members", new UserProject(@Model.id, @item.username))'">Delete member</button>
+                                }
+                                <div class="break"> </div>
+                                <button class="detailsButton w3-button w3-black w3-card-4">Details</button>
+                                <!-- YOU DIDN'T DO ANY CHECK IF USERS ARE ALREADY ADMINS, NOT EVEN IF STATEMENT TO CHECK IF YOU ARE ADMIN SO YOU CAN MAKE YOURSELF ADMIN AGAIN? NO FUNCTIONALITY IMPLEMENTED BUT WE HAVE DESIGN 10/10'
+                                    <div class="break"> </div>
+                                    <button class="assignRolesButton w3-button w3-black w3-card-4">Make Admin</button>
+                                    -->
+                            </div>                        
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="width: 500px !important" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="exampleModalLabel">Members</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="addMembersDiv" class="text-secondary"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

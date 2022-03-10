@@ -1,0 +1,51 @@
+﻿@model ContainerForListAndId<Sprint>
+
+@{
+    ViewData["Title"] = "Sprints";
+}
+<head>
+    <title>Sprints</title>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+
+</head>
+<body>
+<h1>Sprints</h1>
+            <button class="backButton w3-button w3-black w3-card-4" onclick="goToPreviousWebsite()">Go Back</button>
+<div class="row">
+    <div class="structure">
+        <br/>
+        <br/>
+        @foreach (var item in Model.accessList) {
+            <div class="sprint">
+                <h1>Sprint @Html.DisplayFor(modelItem => item.sprintNumber)</h1>
+                <div class="buttonContainer">
+                    @if (item.isScrumMaster) {
+                        <div class="scrum_master"> Scrum Master</div>
+                    <button class="example_c" onclick="location.href='@Url.Action("ViewBacklogForScrumMaster", "Sprint", new IDcontainer(Model.id, item.sprintId))'">Edit Sprint Backlog</button>
+                }
+                    @if (item.isProductOwner)
+                {
+                    <div class="product_owner">Product Owner</div>
+                    <button class="example_c" onclick="location.href='@Url.Action("ViewBacklogForProductOwner", "Sprint", new IDcontainer(Model.id, item.sprintId))'">Edit Sprint Backlog</button>
+                }
+                @if (!item.isProductOwner && !item.isScrumMaster)
+                {
+                    <div class="team_member">Team Member</div>
+                    <button class="example_c" onclick="location.href='@Url.Action("ViewBacklogForTeamMember", "Sprint", new IDcontainer(Model.id, item.sprintId))'">Edit Sprint Backlog</button>
+                }
+                    <button class="example_c">Finish Sprint</button>
+                    <div class="break"> </div>
+                    <button class="example_c" onclick="location.href = '@Url.Action("Index", "Tasks", new {item.sprintId})'">View Tasks</button>
+                    <button class="example_c"> Burndown Chart</button>
+                                        <div class="break"> </div>
+                    @if((bool)ViewData["isAdmin"] == true)
+                {
+                    <button class="example_c" onclick="location.href='@Url.Action("AssignRoles", "Sprint", new { item.sprintId })'">Assign roles</button>
+                }
+                    <button class="example_c" onclick="location.href = '@Url.Action("PlanSprint", "Sprint", new {item.sprintId})'"> Edit Sprint</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</body>

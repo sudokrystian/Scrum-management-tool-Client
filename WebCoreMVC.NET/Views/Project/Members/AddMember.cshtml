@@ -1,0 +1,29 @@
+﻿@model ContainerForListAndId<UserWithName>
+
+@{
+    ViewData["Title"] = "Add Members";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <title>Add members</title>
+</head>
+<body>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <button class="w3-button w3-black w3-card-4" onclick="goToPreviousWebsite()">< Back</button>
+    <br />
+    <br />
+    <h1>Add Members</h1>
+    <div class="row margin-left-80px">
+        <ul>
+            @foreach (var item in Model.accessList)
+            {
+                <li>- <a onclick="location.href='@Url.Action("PostMember", "Members", new UserProject(@Model.id, @item.username))'">@item.username</a>, @item.firstName, @item.lastName</li>
+            }
+        </ul>
+    </div>
+</body>
+</html>
